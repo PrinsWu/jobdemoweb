@@ -1,6 +1,6 @@
 package com.smartbee.jobdemo.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +12,13 @@ import java.sql.Timestamp;
  * @version v1.0
  * @since v1.0 2020/5/18
  */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
-@Data
+@ToString
 public class Client {
     @Id
     @GeneratedValue

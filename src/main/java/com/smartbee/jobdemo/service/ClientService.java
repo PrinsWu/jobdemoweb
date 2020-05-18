@@ -1,5 +1,6 @@
 package com.smartbee.jobdemo.service;
 
+import com.smartbee.jobdemo.model.Client;
 import com.smartbee.jobdemo.model.Company;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,21 +16,21 @@ import java.util.List;
  * @since v1.0 2020/5/18
  */
 @Service
-public class CompanyService {
-    private static final Logger log = LoggerFactory.getLogger(CompanyService.class);
+public class ClientService {
+    private static final Logger log = LoggerFactory.getLogger(ClientService.class);
 
     @Autowired
-    CompanyRespository companyRespository;
+    ClientRespository clientRespository;
 
-    public List<Company> getAll() {
-        log.info("CompanyService getAll...");
-        List<Company> result = new ArrayList<>();
-        companyRespository.findAll().forEach(result::add);
+    public List<Client> getAll() {
+        log.info("ClientService getAll...");
+        List<Client> result = new ArrayList<>();
+        clientRespository.findAll().forEach(result::add);
         log.info("result size:{}", result.size());
         return result;
     }
 
-    public Company save(Company company) {
-        return companyRespository.save(company);
+    public Client save(Client client) {
+        return clientRespository.save(client);
     }
 }

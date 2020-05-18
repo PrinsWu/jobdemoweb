@@ -1,5 +1,7 @@
 package com.smartbee.jobdemo.model;
 
+import lombok.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +15,13 @@ import static javax.persistence.GenerationType.IDENTITY;
  * @version v1.0
  * @since v1.0 2020/5/18
  */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
+@ToString
 public class Company {
     @Id
     @GeneratedValue(strategy = IDENTITY)
