@@ -5,7 +5,8 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.sql.Timestamp;
+import java.io.Serializable;
+import java.sql.Date;
 
 /**
  * @author prinswu
@@ -19,7 +20,7 @@ import java.sql.Timestamp;
 @Builder
 @Entity
 @ToString
-public class Client {
+public class Client implements Serializable {
     @Id
     @GeneratedValue
     private int id;
@@ -28,7 +29,7 @@ public class Client {
     private String email;
     private String phone;
     private String createdBy;
-    private Timestamp createdAt;
+    private Date createdAt;
     private String updatedBy;
-    private Timestamp updatedAt;
+    private Date updatedAt;
 }
