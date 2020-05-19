@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @author prinswu
@@ -32,4 +32,13 @@ public class Client implements Serializable {
     private Date createdAt;
     private String updatedBy;
     private Date updatedAt;
+
+    public Client(int companyId, String name, String email, String phone, String createdBy, Date createdAt) {
+        this.companyId = companyId;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.createdBy = createdBy;
+        this.createdAt = createdAt;
+    }
 }

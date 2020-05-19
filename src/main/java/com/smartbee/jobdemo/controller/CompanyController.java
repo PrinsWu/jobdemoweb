@@ -1,16 +1,14 @@
 package com.smartbee.jobdemo.controller;
 
 import com.smartbee.jobdemo.model.Company;
-import com.smartbee.jobdemo.service.CompanyService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.smartbee.jobdemo.service.CompanyRespository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,23 +17,46 @@ import java.util.List;
  * @since v1.0 2020/5/18
  */
 @RestController
+@Slf4j
 public class CompanyController {
-    private static final Logger log = LoggerFactory.getLogger(CompanyController.class);
 
     @Autowired
-    CompanyService companyService;
+    private CompanyRespository companyRespository;
 
     @GetMapping("/companies")
     public List<Company> getAll() {
-        log.info("CompanyController getAll...");
-        return companyService.getAll();
+        log.info("getAll...");
+        List<Company> result = new ArrayList<>();
+        companyRespository.findAll().forEach(result::add);
+        return result;
     }
 
-    @PostMapping(value = "/companies", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Company createCompany(@RequestBody Company company) {
-        log.info("createCompany company:{}", company);
+    @GetMapping("/companies/{id}")
+    public Company findById(@PathVariable int id) {
+        log.info("findById:{}", id);
+        return companyRespository.findById(id).orElseThrow(() -> new DataNotFoundException(String.format("company[%d] not found", id)));
+    }
 
-        return companyService.save(company);
+    @RolesAllowed({"SUPER_USER", "OPERATOR"})
+    @PostMapping(value = "/companies", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Company create(@RequestBody Company company) {
+        log.info("create:{}", company);
+        return companyRespository.save(company);
+    }
+
+    @RolesAllowed({"SUPER_USER", "MANAGER"})
+    @PutMapping(value = "/companies", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Company update(@RequestBody Company company) {
+        log.info("update:{}", company);
+        return companyRespository.save(company);
+    }
+
+    @RolesAllowed({"SUPER_USER", "MANAGER"})
+    @DeleteMapping(value = "/companies/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String delete(@PathVariable int id) {
+        log.info("delete id:{}", id);
+        companyRespository.deleteById(id);
+        return "OK";
     }
 
 }

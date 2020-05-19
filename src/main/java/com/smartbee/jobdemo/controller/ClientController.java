@@ -1,17 +1,14 @@
 package com.smartbee.jobdemo.controller;
 
 import com.smartbee.jobdemo.model.Client;
-import com.smartbee.jobdemo.model.Company;
-import com.smartbee.jobdemo.service.ClientService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.smartbee.jobdemo.service.ClientRespository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,23 +17,46 @@ import java.util.List;
  * @since v1.0 2020/5/18
  */
 @RestController
+@Slf4j
 public class ClientController {
-    private static final Logger log = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
-    ClientService clientService;
+    private ClientRespository clientRespository;
 
     @GetMapping("/clients")
     public List<Client> getAll() {
-        log.info("ClientController getAll...");
-        return clientService.getAll();
+        log.info("getAll...");
+        List<Client> result = new ArrayList<>();
+        clientRespository.findAll().forEach(result::add);
+        return result;
     }
 
-    @PostMapping(value = "/clients", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Client createCompany(@RequestBody Client client) {
-        log.info("createCompany client:{}", client);
+    @GetMapping("/clients/{id}")
+    public Client findById(@PathVariable int id) {
+        log.info("findById:{}", id);
+        return clientRespository.findById(id).orElseThrow(() -> new DataNotFoundException(String.format("client[%d] not found", id)));
+    }
 
-        return clientService.save(client);
+    @RolesAllowed({"SUPER_USER", "OPERATOR"})
+    @PostMapping(value = "/clients", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Client create(@RequestBody Client client) {
+        log.info("create:{}", client);
+        return clientRespository.save(client);
+    }
+
+    @RolesAllowed({"SUPER_USER", "MANAGER"})
+    @PutMapping(value = "/clients", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Client update(@RequestBody Client client) {
+        log.info("update:{}", client);
+        return clientRespository.save(client);
+    }
+
+    @RolesAllowed({"SUPER_USER", "MANAGER"})
+    @DeleteMapping(value = "/clients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String delete(@PathVariable int id) {
+        log.info("delete id:{}", id);
+        clientRespository.deleteById(id);
+        return "OK";
     }
 
 }

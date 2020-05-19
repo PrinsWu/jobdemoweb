@@ -9,8 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -30,11 +29,18 @@ public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private int id;
-    @Column(nullable = false)
+    @NonNull
     private String name;
     private String address;
     private String createdBy;
     private Date createdAt;
     private String updatedBy;
-    private Timestamp updatedAt;
+    private Date updatedAt;
+
+    public Company(@NonNull String name, String address, String createdBy, Date createdAt) {
+        this.name = name;
+        this.address = address;
+        this.createdBy = createdBy;
+        this.createdAt = createdAt;
+    }
 }
