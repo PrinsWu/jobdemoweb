@@ -23,6 +23,7 @@ public class CompanyController {
     @Autowired
     private CompanyRespository companyRespository;
 
+    @RolesAllowed({"SUPER_USER", "MANAGER"})
     @GetMapping("/companies")
     public List<Company> getAll() {
         log.info("getAll...");

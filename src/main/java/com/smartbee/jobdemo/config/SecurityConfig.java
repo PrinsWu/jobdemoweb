@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -22,6 +21,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled=true, securedEnabled=true, prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+//    private static final String[] AUTH_LIST = {
+//            "/swagger-resources/**",
+//            "/swagger-ui.html**",
+//            "/webjars/**",
+//            "/v2/api-docs"
+//    };
 
     @Autowired
     UserDetailsService demoUserDetailsService;
@@ -46,7 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .and()
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated();
+//                .anyRequest()
+//                .antMatchers(AUTH_LIST).permitAll()
+                .anyRequest().authenticated();
+//        http.authorizeRequests().antMatchers(AUTH_LIST).authenticated().and().httpBasic();
     }
 }
