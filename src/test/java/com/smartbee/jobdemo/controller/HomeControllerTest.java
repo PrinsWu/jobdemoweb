@@ -1,15 +1,15 @@
 package com.smartbee.jobdemo.controller;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -17,39 +17,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @version v1.0
  * @since v1.0 2020/5/20
  */
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest
 //@AutoConfigureMockMvc
-public class ClientControllerTest {
-
+public class HomeControllerTest {
 //    @Autowired
 //    private MockMvc mvc;
 //
 //    @WithMockUser(value = "manager", roles = {"MANAGER"})
 //    @Test
-//    void getAll() throws Exception {
-//        mvc.perform(get("/clients")).andDo(print()).andExpect(status().isOk());
+//    void testHome() throws Exception {
+//        mvc.perform(get("/")).andExpect(status().isOk());
 //    }
 //
 //    @WithMockUser(value = "manager", roles = {"MANAGER"})
 //    @Test
-//    void findById() throws Exception {
-//        int id = 1;
-//        mvc.perform(get(String.format("/clients/%d", id))).andDo(print()).andExpect(status().isOk());
-//    }
-
-//    @WithMockUser(value = "manager", roles = {"MANAGER"})
-//    @Test
-//    void create() {
-//    }
-
-//    @WithMockUser(value = "manager", roles = {"MANAGER"})
-//    @Test
-//    void update() {
-//    }
-
-//    @WithMockUser(value = "manager", roles = {"MANAGER"})
-//    @Test
-//    void delete() {
+//    void testHello() throws Exception {
+//        mvc.perform(get("/hello")).andDo(print()).andExpect(status().isOk()).andExpect(
+//                content().string(containsString("Hello World!")));
 //    }
 }

@@ -60,4 +60,11 @@ public class CompanyController {
         return "OK";
     }
 
+    @RolesAllowed({"SUPER_USER", "OPERATOR"})
+    @PostMapping(value = "/companies/multiple", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String createMutiple(@RequestBody List<Company> companies) {
+        log.info("createMutiple:{}", companies);
+        companyRespository.saveAll(companies);
+        return "OK";
+    }
 }

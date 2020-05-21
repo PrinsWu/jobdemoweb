@@ -1,6 +1,8 @@
 package com.smartbee.jobdemo.controller;
 
+import com.smartbee.jobdemo.model.BaseRestResp;
 import com.smartbee.jobdemo.model.Client;
+import com.smartbee.jobdemo.model.Company;
 import com.smartbee.jobdemo.service.ClientRespository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author prinswu
@@ -29,12 +32,23 @@ public class ClientController {
         List<Client> result = new ArrayList<>();
         clientRespository.findAll().forEach(result::add);
         return result;
+//        try {
+//            return new BaseRestResp<>(200, "success", result);
+//        } catch (Exception e) {
+//            return new BaseRestResp<>(400, e.getMessage(), null);
+//        }
     }
 
     @GetMapping("/clients/{id}")
     public Client findById(@PathVariable int id) {
         log.info("findById:{}", id);
         return clientRespository.findById(id).orElseThrow(() -> new DataNotFoundException(String.format("client[%d] not found", id)));
+//        Optional<Client> client = clientRespository.findById(id);
+//        try {
+//            return new BaseRestResp<Client>(200, "success", client.get());
+//        } catch (Exception e) {
+//            return new BaseRestResp<Client>(400, String.format("client[%d] not found", id), null);
+//        }
     }
 
     @RolesAllowed({"SUPER_USER", "OPERATOR"})
@@ -59,4 +73,11 @@ public class ClientController {
         return "OK";
     }
 
+    @RolesAllowed({"SUPER_USER", "OPERATOR"})
+    @PostMapping(value = "/clients/multiple", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String createMutiple(@RequestBody List<Client> clients) {
+        log.info("createMutiple:{}", clients);
+        clientRespository.saveAll(clients);
+        return "OK";
+    }
 }

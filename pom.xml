@@ -76,6 +76,23 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
+			<version>1.2.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -83,26 +100,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-<!--				<configuration>-->
-<!--					&lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
-<!--					<jvmArguments>${argLine}</jvmArguments>-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>start-spring-boot</id>-->
-<!--						<phase>pre-integration-test</phase>-->
-<!--						<goals>-->
-<!--							<goal>start</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--					<execution>-->
-<!--						<id>stop-spring-boot</id>-->
-<!--						<phase>post-integration-test</phase>-->
-<!--						<goals>-->
-<!--							<goal>stop</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
