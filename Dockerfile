@@ -24,4 +24,4 @@ VOLUME /tmp
 COPY --from=0 "/jobdemo/target/jobdemo-*-SNAPSHOT.jar" app.jar
 
 # Fire up our Spring Boot app by default
-CMD [ "sh", "-c", "java $JAVA_OPTS -XX:+UseContainerSupport -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+CMD [ "sh", "-c", "java $JAVA_OPTS -Xmx1024M -XX:+UseContainerSupport -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
